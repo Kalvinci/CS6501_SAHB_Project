@@ -8,23 +8,19 @@ def root():
 
 @app.route("/working")
 def working():
-	sensed_data = actuate("working")
-	return jsonify(sensed_data)
+	return actuate("working")
 
 @app.route("/reading")
 def reading():
-	sensed_data = actuate("reading")
-	return jsonify(sensed_data)
+	return actuate("reading")
 
 @app.route("/meeting")
 def meeting():
-	sensed_data = actuate("meeting")
-	return jsonify(sensed_data)
+	return actuate("meeting")
 
 @app.route("/powerOff")
 def powerOff():
-	turnOff()
-	return "SUCCESS"
+	return turnOff()
 
 if __name__ == "__main__":
 	app.run(debug=True, host="0.0.0.0")
