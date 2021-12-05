@@ -13,12 +13,15 @@
 			<div class="btn-container">
 				<div id="working-btn" class="task-btn" title="Working" onclick="sendRequest('working')">
 					<img src="{{url_for('static', filename='images/working.png')}}">
+					<img id="tick" class="hide" src="{{url_for('static', filename='images/tick.png')}}">
 				</div>
 				<div id="meeting-btn" class="task-btn" title="Meeting" onclick="sendRequest('meeting')">
 					<img src="{{url_for('static', filename='images/meeting.png')}}">
+					<img id="tick" class="hide" src="{{url_for('static', filename='images/tick.png')}}">
 				</div>
 				<div id="reading-btn" class="task-btn" title="Reading" onclick="sendRequest('reading')">
 					<img src="{{url_for('static', filename='images/reading.png')}}">
+					<img id="tick" class="hide" src="{{url_for('static', filename='images/tick.png')}}">
 				</div>
 				<div class="off-btn disabled" title="Power Off" onclick="powerOff('reading')">
 					Power Off
@@ -34,6 +37,7 @@
 				let loading = document.querySelector("#loading-div");
 				loading.classList.remove("hidden");
 				let powerOff = document.querySelector(".off-btn");
+				hideTicks();
 				fetch(`/${task}`)
   					.then(response => {
 						  return response.json();
@@ -41,6 +45,13 @@
 					.then(data => {
 						if (data === "SUCCESS") {
 							powerOff.classList.remove("disabled");
+							if (task === "reading") {
+								document.querySelector("#reading-btn #tick").classList.remove("hide");
+							} else if (task === "meeting") {
+								document.querySelector("#meeting-btn #tick").classList.remove("hide");
+							} else {
+								document.querySelector("#working-btn #tick").classList.remove("hide");
+							}
 						}
 					})
 					.catch(error => {
@@ -49,6 +60,12 @@
 					.finally(() => {
 						loading.classList.add("hidden");
 					})
+			}
+
+			function hideTicks() {
+				for (let elem of document.querySelectorAll("#tick")) {
+					elem.classList.add("hide");
+				}
 			}
 
 			function powerOff() {
@@ -61,6 +78,7 @@
 					})
 					.then(data => {
 						if (data === "SUCCESS") {
+							hideTicks();
 							powerOff.classList.add("disabled");
 						}
 					})

@@ -25,7 +25,7 @@ body {
 	border-radius: 5%;
 	margin: 10px 0;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
 
@@ -69,4 +69,8 @@ body {
 	cursor: not-allowed;
 	pointer-events: none;
 	background-color: #918e8e;
+}
+
+.hide {
+	display: none;
 }
