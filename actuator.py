@@ -3,10 +3,10 @@ from blinkytape import BlinkyTape
 from threading import Thread
 import time
 
-luxval = 0
 task = None
 
 stop_threads = False
+thread = None
 
 requirements = {
     "reading": { "lux": 300, "color": (0, 0, 155) },
@@ -26,7 +26,7 @@ class MyThread(Thread):
         self.get_lux()
 
     def get_lux(self):
-        global luxval
+        global stop_threads
         while True:
             if stop_threads:
                 break
@@ -40,15 +40,13 @@ class MyThread(Thread):
                     bb.displayColor(R+100, G+100, B+100)
             time.sleep(2)
 
-thread = None
-
 def turnOff():
     try:
         global stop_threads, thread
         stop_threads = True
+        bb.displayColor(0, 0, 0)
         if thread:
             thread.join()
-        bb.displayColor(0, 0, 0)
         return 0
     except Exception as e:
         print("Poweroff Error! \n", e)
